@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ahmetarabaci.keycloakservice.model.UserDto;
 import com.ahmetarabaci.keycloakservice.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
+@SecurityRequirement(name = "Keycloak")
 public class UserController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);

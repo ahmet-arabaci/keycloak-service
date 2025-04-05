@@ -29,6 +29,7 @@ public class SecurityConfig {
 		http.authorizeHttpRequests(authorize -> { 
 			authorize
 			.requestMatchers(HttpMethod.GET, "/getuserinfo").permitAll()
+			.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
 			.anyRequest().authenticated();
 		});
 		// 1st WAY: JWT ISSUER

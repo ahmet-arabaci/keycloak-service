@@ -1,0 +1,27 @@
+{
+  "realm": "custom-realm",
+  "auth-server-url": "http://localhost:8080",
+  "resource": "custom-client",
+  "credentials": {
+    "secret": "w7tu8PG8iPOvBG2Gq56A5LF2SVxlvTp9"
+  },
+  "http-method-as-scope":true,
+  "paths": [
+    {
+      "path": "/swagger-ui/*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/v3/api-docs/*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/getuserinfo/*",
+      "enforcement-mode": "DISABLED"
+    }
+  ]
+}
+
+
+
+

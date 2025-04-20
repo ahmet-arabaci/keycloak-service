@@ -18,4 +18,8 @@ public class UserService {
 		return new UserDto("570411b5-86b8-48d2-8e93-025c69e6819e", "Gulsen", "Arabaci");
 	}
 	
+	public UserDto updateUserInfo(String guid) {
+		return new UserDto(guid, "Ahmet", "Arabaci");
+	}
+	
 }

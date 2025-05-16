@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -22,46 +21,45 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
-import com.ahmetarabaci.keycloakservice.service.CustomJWTAuthConverter;
 
 @Configuration
 @EnableWebSecurity
 // @EnableMethodSecurity
-public class SecurityConfig {
-		
-	private static final Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
+public class KeycloakConfig {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(KeycloakConfig.class);
 	
 	@Autowired
 	private CustomJWTAuthConverter customJWTAuthConverter;
-			
+	
 	@Bean
 	public SecurityFilterChain initSecurityFilterChain(HttpSecurity http) throws Exception {
 		
-		LOGGER.info("initSecurityFilterChain | Starting...");
-		
 		http.csrf(t -> t.disable());
+		
 		/*
-		http.authorizeHttpRequests(authorize -> { 
+		http.authorizeHttpRequests(authorize -> {			
 			authorize
-			.requestMatchers(HttpMethod.GET, "/getuserinfo").permitAll()
+			.requestMatchers("/test/public").permitAll()
 			.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
 			.anyRequest().authenticated();
 		});
 		*/
-		// 1st WAY: JWT ISSUER
-		/*
+		
+		// OAuth2 Resource Server		
 		http.oauth2ResourceServer(t -> {
-			// t.jwt(configurer -> configurer.jwtAuthenticationConverter(customJWTAuthConverter));
+			// 1st WAY : JWT ISSUER
 			t.jwt(Customizer.withDefaults());
-		});
-		*/
-		// 2nd WAY: OPAQUETOKEN
-		// http.oauth2ResourceServer(t -> { t.opaqueToken(Customizer.withDefaults()); });
+			// t.jwt(configurer -> configurer.jwtAuthenticationConverter(customJWTAuthConverter));
+
+			// 2nd WAY: OPAQUETOKEN
+			// t.opaqueToken(Customizer.withDefaults()); 			
+		});		
 		
+		// Keycloak-Level Authorization ('keycloak-policy' JSON File)
 		http.addFilterAfter(getServletPolicyEnforcerFilter(), BearerTokenAuthenticationFilter.class);
-		http.sessionManagement(t -> { t.sessionCreationPolicy(SessionCreationPolicy.STATELESS); });
 		
-		LOGGER.info("initSecurityFilterChain | SecurityFilterChain bean has been initialized!");
+		http.sessionManagement(t -> { t.sessionCreationPolicy(SessionCreationPolicy.STATELESS); });
 		return http.build();
 	}
 	
@@ -70,9 +68,9 @@ public class SecurityConfig {
 	 * To trigger this bean definition, SecurityFilterChain bean must be use 
 	 * "t.jwt(configurer -> configurer.jwtAuthenticationConverter(customJWTAuthConverter));" oauth2 resource server.
 	 * 
-	 * @author Ahmet Arabaci - AhmetAra
+	 * @author Ahmet Arabacı
 	 * @since 04.04.2025 00:24
-	 */
+	 */	
 	@Bean
 	public DefaultMethodSecurityExpressionHandler defaultMethodSecurityExpressionHandler() {		
 		DefaultMethodSecurityExpressionHandler secExpHandler = new DefaultMethodSecurityExpressionHandler();
@@ -85,7 +83,7 @@ public class SecurityConfig {
 	 * To trigger this bean definition, SecurityFilterChain bean must be use 
 	 * "t.jwt(Customizer.withDefaults());" oauth2 resource server.
 	 * 
-	 * @author Ahmet Arabaci
+	 * @author Ahmet Arabacı
 	 * @since 04.04.2025 00:37
 	 */
 	@Bean
@@ -124,6 +122,6 @@ public class SecurityConfig {
 			}
 		});
 	}
+	
 }
-
 

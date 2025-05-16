@@ -6,20 +6,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class KeycloakUtil {
-	
+public class KeycloakAdminUtil {
+
 	private Keycloak keycloak;
 	
 	@Value("${realm}")
 	private String realm;
 	
 	@Value("${server-url}")
-	private String serverUrl;
+	private String serverURL;
 	
 	@Value("${client-id}")
-	private String clientId;
+	private String clientID;
 	
-	@Value("${grant-type}")	
+	@Value("${grant-type}")
 	private String grantType;
 	
 	@Value("${keycloak-username}")
@@ -28,25 +28,14 @@ public class KeycloakUtil {
 	@Value("${keycloak-password}")
 	private String password;
 	
-	/**
-	 * It returns a Keycloak instance.
-	 * 
-	 * @author Ahmet Arabacı
-	 * @since 13.04.2025 21:44
-	 */
 	public Keycloak getInstance() {
 		if (keycloak == null) {
 			keycloak = KeycloakBuilder.builder()
-				.realm(realm)
-				.serverUrl(serverUrl)
-				.clientId(clientId)
-				.grantType(grantType)
-				.username(username)
-				.password(password)
+				.realm(realm).serverUrl(serverURL).clientId(clientID).grantType(grantType)
+				.username(username).password(password)
 				.build();
 		}
 		return keycloak;
 	}
 	
 }
-

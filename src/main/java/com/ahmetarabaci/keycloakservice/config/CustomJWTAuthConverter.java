@@ -1,4 +1,4 @@
-package com.ahmetarabaci.keycloakservice.service;
+package com.ahmetarabaci.keycloakservice.config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Implementation for JWT authentication converter configurer.
  * 
- * @author Ahmet Arabaci - AhmetAra
- * @since 04.04.2025 00:24
+ * @author Ahmet Arabacı
+ * @since 24.04.2025 15:24
  */
 @Component
 public class CustomJWTAuthConverter implements Converter<Jwt, AbstractAuthenticationToken> {

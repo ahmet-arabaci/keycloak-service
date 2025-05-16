@@ -11,16 +11,16 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 @ComponentScan(basePackages = {"com.ahmetarabaci.*"})
 @SecurityScheme(
 	name = "Keycloak", 
-	openIdConnectUrl = "http://localhost:8080/realms/custom-realm/.well-known/openid-configuration",
+	openIdConnectUrl = "http://localhost:8080/realms/test-realm/.well-known/openid-configuration",
 	scheme = "bearer",
 	type = SecuritySchemeType.OPENIDCONNECT,
 	in = SecuritySchemeIn.HEADER	
 )
-public class UserApp {
-	
-	public static void main(String[] args) {
-		SpringApplication.run(UserApp.class, args);
-	}
+public class KeycloakApp {
 
+	public static void main(String[] args) {
+		SpringApplication.run(KeycloakApp.class, args);
+	}
+	
 }
 
